@@ -72,6 +72,14 @@ func configGetHandler (res http.ResponseWriter, req *http.Request) {
 		} else {
 			log.Debugf("FOUND: %+v", value)
 		}
+		//add to items
+		root.SetNamedValue(name, value)
+
+		//todo: after get new item, its not validated until this user confirmed its valid
+		//then we endorse it...?
+
+		//validation is done in user
+		//editor must also do get, then post change which gets staged to all users to validate it
 	}
 
 	jsonValue,_ := json.Marshal(value)
