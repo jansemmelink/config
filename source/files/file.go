@@ -44,6 +44,9 @@ func readFileIntoStruct(fileName string, ext string, userStructPtr interface{}) 
 //and then creates an config.IConfig that represents the file
 //for subsequent data access and to control the reload mechanism
 func newFile(configName string, fileName string, ext string, configType reflect.Type) (*file, error) {
+	if configType.Kind() == reflect.Ptr {
+		configType = configType.Elem()
+	}
 	newConfigPtrValue := reflect.New(configType)
 	userStructPtr := newConfigPtrValue.Interface()
 	if err := readFileIntoStruct(fileName, ext, userStructPtr); err != nil {
@@ -65,7 +68,7 @@ func newFile(configName string, fileName string, ext string, configType reflect.
 		configName:    configName,
 		fileName:      fileName,
 		ext:           ext,
-		currentStruct: newConfigPtrValue.Elem().Interface(), //dereference the config struct pointer to just a struct that implements config.IValidator
+		currentStruct: newConfigPtrValue.Interface(), //dereference the config struct pointer to just a struct that implements config.IValidator
 	}
 	return configFile, nil
 } //newFile()

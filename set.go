@@ -67,7 +67,6 @@ func (set *set) MustSource(name string, address string) ISet {
 	return set.WithSource(source)
 } //set.MustSource()
 
-//old func: func Add(configPath string, configName string, configType reflect.Type) (*Config, error) {
 func (set *set) Add(name string, tmpl IValidator) (IConfig, error) {
 	if set == nil || len(name) == 0 {
 		return nil, log.Wrapf(nil, "(%T=%p).Add(%s,%T)", set, set, name, tmpl)
